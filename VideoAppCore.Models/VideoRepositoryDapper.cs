@@ -3,7 +3,7 @@
 namespace VideoAppCore.Models
 {
     /// <summary>
-    /// [4][2] 리포지토리 클래스: Dapper를 사용하여 CRUD 구현
+    /// [4][2] 리포지토리 클래스: Micro ORM인 Dapper를 사용하여 CRUD 구현
     /// </summary>
     public class VideoRepositoryDapper : IVideoRepository
     {
