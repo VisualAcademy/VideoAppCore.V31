@@ -1,23 +1,15 @@
-﻿using System;
-
-namespace VideoAppCore.Models
+﻿namespace VideoAppCore.Models
 {
     /// <summary>
     /// [2] 모델 클래스: Video 모델 클래스 == Videos 테이블과 일대일로 매핑
     /// Video, VideoModel, VideoViewModel, VideoBase, VideoDto, VideoEntity, ..
     /// </summary>
-    public class Video
+    public class Video : AuditableBase
     {
         /// <summary>
         /// 일련번호
         /// </summary>
         public int Id { get; set; }
-
-        /// <summary>
-        /// 등록일
-        /// </summary>
-        //public DateTimeOffset Created { get; set; }
-        public DateTime Created { get; set; }
 
         /// <summary>
         /// 동영상 제목
