@@ -16,7 +16,8 @@ namespace VideoAppCore.Models
         /// <summary>
         /// 등록일
         /// </summary>
-        public DateTimeOffset Created { get; set; }
+        //public DateTimeOffset Created { get; set; }
+        public DateTime Created { get; set; }
 
         /// <summary>
         /// 동영상 제목
