@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Dapper;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Linq; 
 
 namespace VideoAppCore.Models
 {
@@ -8,29 +12,71 @@ namespace VideoAppCore.Models
     /// </summary>
     public class VideoRepositoryDapperAsync : IVideoRepositoryAsync
     {
-        public Task<Video> AddVideoAsync(Video model)
+        private readonly SqlConnection db;
+
+        public VideoRepositoryDapperAsync(string connectionString)
         {
-            throw new System.NotImplementedException();
+            db = new SqlConnection(connectionString);
         }
 
-        public Task<Video> GetVideoByIdAsync(int id)
+        // 입력
+        public async Task<Video> AddVideoAsync(Video model)
         {
-            throw new System.NotImplementedException();
+            const string query =
+                "Insert Into Videos(Title, Url, Name, Company, CreatedBy) Values(@Title, @Url, @Name, @Company, @CreatedBy);" +
+                "Select Cast(SCOPE_IDENTITY() As Int);";
+
+            int id = await db.ExecuteScalarAsync<int>(query, model);
+
+            model.Id = id;
+
+            return model;
         }
 
-        public Task<List<Video>> GetVideosAsync()
+        // 상세보기
+        public async Task<Video> GetVideoByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            const string query = "Select * From Videos Where Id = @Id";
+
+            var video = await db.QueryFirstOrDefaultAsync<Video>(query, new { id }, commandType: CommandType.Text);
+
+            return video;
         }
 
-        public Task RemoveVideoAsync(int id)
+        // 출력
+        public async Task<List<Video>> GetVideosAsync()
         {
-            throw new System.NotImplementedException();
+            const string query = "Select * From Videos;";
+
+            var videos = await db.QueryAsync<Video>(query);
+
+            return videos.ToList();
         }
 
-        public Task<Video> UpdateVideoAsync(Video model)
+        // 삭제
+        public async Task RemoveVideoAsync(int id)
         {
-            throw new System.NotImplementedException();
+            const string query = "Delete Videos Where Id = @Id";
+
+            await db.ExecuteAsync(query, new { id }, commandType: CommandType.Text);
+        }
+
+        // 수정
+        public async Task<Video> UpdateVideoAsync(Video model)
+        {
+            const string query = @"
+                    Update Videos 
+                    Set 
+                        Title = @Title, 
+                        Url = @Url, 
+                        Name = @Name, 
+                        Company = @Company, 
+                        ModifiedBy = @ModifiedBy 
+                    Where Id = @Id";
+
+            await db.ExecuteAsync(query, model);
+
+            return model;
         }
     }
 }

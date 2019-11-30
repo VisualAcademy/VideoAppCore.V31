@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace VideoAppCore.Models
@@ -8,29 +9,50 @@ namespace VideoAppCore.Models
     /// </summary>
     public class VideoRepositoryEfCoreAsync : IVideoRepositoryAsync
     {
-        public Task<Video> AddVideoAsync(Video model)
+        private readonly VideoDbContext _context;
+
+        public VideoRepositoryEfCoreAsync(VideoDbContext context)
         {
-            throw new System.NotImplementedException();
+            this._context = context;
         }
 
-        public Task<Video> GetVideoByIdAsync(int id)
+        // 입력
+        public async Task<Video> AddVideoAsync(Video model)
         {
-            throw new System.NotImplementedException();
+            _context.Videos.Add(model);
+            await _context.SaveChangesAsync();
+            return model;
         }
 
-        public Task<List<Video>> GetVideosAsync()
+        // 상세보기
+        public async Task<Video> GetVideoByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await _context.Videos.FindAsync(id); 
         }
 
-        public Task RemoveVideoAsync(int id)
+        // 출력
+        public async Task<List<Video>> GetVideosAsync()
         {
-            throw new System.NotImplementedException();
+            return await _context.Videos.ToListAsync();
         }
 
-        public Task<Video> UpdateVideoAsync(Video model)
+        // 삭제
+        public async Task RemoveVideoAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var video = await _context.Videos.FindAsync(id);
+            if (video != null)
+            {
+                _context.Videos.Remove(video);
+                await _context.SaveChangesAsync(); 
+            }
+        }
+
+        // 수정
+        public async Task<Video> UpdateVideoAsync(Video model)
+        {
+            _context.Entry(model).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return model; 
         }
     }
 }
