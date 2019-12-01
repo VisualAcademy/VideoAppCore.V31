@@ -4,6 +4,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System.Threading.Tasks;
 
+/// <summary>
+/// TODO: 단일 테스트 메서드에서 리포지토리 클래스의 모든 CRUD를 한꺼번에 테스트
+/// </summary>
 namespace VideoAppCore.Models.Tests
 {
     [TestClass]
@@ -21,15 +24,15 @@ namespace VideoAppCore.Models.Tests
             {
                 // 리포지토리 개체 생성
                 var repository = new VideoRepositoryEfCoreAsync(context);
-                var video = new Video { Title = "제목", Url = "URL", Company = "Hawaso", Name = "박용준" };
+                var video = new Video { Title = "제목", Url = "URL", Company = "Hawaso", Name = "홍길동" };
                 await repository.AddVideoAsync(video);
                 context.SaveChanges();
             }
 
             using (var context = new VideoDbContext(options))
             {
-                Assert.AreEqual(1, context.Videos.Count());
-                Assert.AreEqual("URL", context.Videos.Single().Url);
+                Assert.IsTrue(context.Videos.Count() > 0);
+                Assert.AreEqual("URL", context.Videos.Where(v => v.Name == "홍길동").Single().Url);
             }
         }
 
