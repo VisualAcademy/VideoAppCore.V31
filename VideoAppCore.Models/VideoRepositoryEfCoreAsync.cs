@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace VideoAppCore.Models
@@ -33,7 +34,7 @@ namespace VideoAppCore.Models
         // 상세보기
         public async Task<Video> GetVideoByIdAsync(int id)
         {
-            return await _context.Videos.FindAsync(id); 
+            return await _context.Videos.Where(v => v.Id == id).SingleOrDefaultAsync(); 
         }
 
         // 수정
@@ -47,7 +48,7 @@ namespace VideoAppCore.Models
         // 삭제
         public async Task RemoveVideoAsync(int id)
         {
-            var video = await _context.Videos.FindAsync(id);
+            var video = await _context.Videos.Where(v => v.Id == id).SingleOrDefaultAsync();
             if (video != null)
             {
                 _context.Videos.Remove(video);
