@@ -24,16 +24,24 @@ namespace VideoAppCore.Models
             return model;
         }
 
+        // 출력
+        public async Task<List<Video>> GetVideosAsync()
+        {
+            return await _context.Videos.ToListAsync();
+        }
+
         // 상세보기
         public async Task<Video> GetVideoByIdAsync(int id)
         {
             return await _context.Videos.FindAsync(id); 
         }
 
-        // 출력
-        public async Task<List<Video>> GetVideosAsync()
+        // 수정
+        public async Task<Video> UpdateVideoAsync(Video model)
         {
-            return await _context.Videos.ToListAsync();
+            _context.Entry(model).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return model; 
         }
 
         // 삭제
@@ -45,14 +53,6 @@ namespace VideoAppCore.Models
                 _context.Videos.Remove(video);
                 await _context.SaveChangesAsync(); 
             }
-        }
-
-        // 수정
-        public async Task<Video> UpdateVideoAsync(Video model)
-        {
-            _context.Entry(model).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return model; 
         }
     }
 }

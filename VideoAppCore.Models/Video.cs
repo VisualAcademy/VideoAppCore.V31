@@ -1,4 +1,6 @@
-﻿namespace VideoAppCore.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace VideoAppCore.Models
 {
     /// <summary>
     /// [2] 모델 클래스: Video 모델 클래스 == Videos 테이블과 일대일로 매핑
@@ -14,6 +16,7 @@
         /// <summary>
         /// 동영상 제목
         /// </summary>
+        [Required]
         public string Title { get; set; }
 
         /// <summary>
