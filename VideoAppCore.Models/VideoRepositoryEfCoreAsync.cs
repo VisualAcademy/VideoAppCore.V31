@@ -20,7 +20,7 @@ namespace VideoAppCore.Models
         // 입력
         public async Task<Video> AddVideoAsync(Video model)
         {
-            await _context.AddAsync<Video>(model);
+            _context.Add(model);
             await _context.SaveChangesAsync();
             return model;
         }
