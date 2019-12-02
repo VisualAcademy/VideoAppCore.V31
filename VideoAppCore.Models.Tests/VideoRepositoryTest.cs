@@ -64,49 +64,49 @@ namespace VideoAppCore.Models.Tests
             }
         }
         
-        [TestMethod]
-        public async Task GetVideosAsyncMethodTestWithSqlite()
-        {
-            // In-memory database only exists while the connection is open
-            var connection = new SqliteConnection("DataSource=:memory:");
-            connection.Open();
+        //[TestMethod]
+        //public async Task GetVideosAsyncMethodTestWithSqlite()
+        //{
+        //    // In-memory database only exists while the connection is open
+        //    var connection = new SqliteConnection("DataSource=:memory:");
+        //    connection.Open();
 
-            try
-            {
-                // DbContextOptions 생성
-                // DbContextOptionsBuilder를 사용하여 인-메모리 데이터베이스 정보를 DbContext에 전달
-                var options = new DbContextOptionsBuilder<VideoDbContext>().UseSqlite(connection).Options;
+        //    try
+        //    {
+        //        // DbContextOptions 생성
+        //        // DbContextOptionsBuilder를 사용하여 인-메모리 데이터베이스 정보를 DbContext에 전달
+        //        var options = new DbContextOptionsBuilder<VideoDbContext>().UseSqlite(connection).Options;
 
-                using (var context = new VideoDbContext(options))
-                {
-                    context.Database.EnsureCreated();
-                }
+        //        using (var context = new VideoDbContext(options))
+        //        {
+        //            context.Database.EnsureCreated();
+        //        }
 
-                // 컨텍스트 개체 생성
-                using (var context = new VideoDbContext(options))
-                {
-                    var video1 = new Video { Title = "제목", Url = "URL", Company = "Hawaso", Name = "박용준" };
-                    context.Videos.Add(video1);
-                    var video2 = new Video { Title = "제목", Url = "URL", Company = "Hawaso", Name = "김태영" };
-                    context.Videos.Add(video2);
-                    var video3 = new Video { Title = "제목", Url = "URL", Company = "Hawaso", Name = "한상훈" };
-                    context.Videos.Add(video3);
-                    context.SaveChanges();
-                }
+        //        // 컨텍스트 개체 생성
+        //        using (var context = new VideoDbContext(options))
+        //        {
+        //            var video1 = new Video { Title = "제목", Url = "URL", Company = "Hawaso", Name = "박용준" };
+        //            context.Videos.Add(video1);
+        //            var video2 = new Video { Title = "제목", Url = "URL", Company = "Hawaso", Name = "김태영" };
+        //            context.Videos.Add(video2);
+        //            var video3 = new Video { Title = "제목", Url = "URL", Company = "Hawaso", Name = "한상훈" };
+        //            context.Videos.Add(video3);
+        //            context.SaveChanges();
+        //        }
 
-                using (var context = new VideoDbContext(options))
-                {
-                    var repository = new VideoRepositoryEfCoreAsync(context);
-                    var videos = await repository.GetVideosAsync();
-                    Assert.AreEqual(3, videos.Count());
-                    Assert.AreEqual("김태영", videos.Where(v => v.Id == 2).FirstOrDefault()?.Name);
-                }
-            }
-            finally
-            {
-                connection.Close();
-            }
-        }
+        //        using (var context = new VideoDbContext(options))
+        //        {
+        //            var repository = new VideoRepositoryEfCoreAsync(context);
+        //            var videos = await repository.GetVideosAsync();
+        //            Assert.AreEqual(3, videos.Count());
+        //            Assert.AreEqual("김태영", videos.Where(v => v.Id == 2).FirstOrDefault()?.Name);
+        //        }
+        //    }
+        //    finally
+        //    {
+        //        connection.Close();
+        //    }
+        //}
 
         [TestMethod]
         public async Task GetVideoByIdAsyncMethodTest()
