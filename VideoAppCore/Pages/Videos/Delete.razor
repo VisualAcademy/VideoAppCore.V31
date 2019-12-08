@@ -1,7 +1,7 @@
 ﻿@page "/Videos/Delete/{id}"
 
 @inject IVideoRepositoryAsync repository
-@inject NavigationManager navigationManger
+@inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime 
 
 
@@ -62,7 +62,7 @@
             if (int.TryParse(Id, out int id)) { }
             await repository.RemoveVideoAsync(id);
 
-            navigationManger.NavigateTo("/Videos"); // 리스트 페이지로 이동
+            NavigationManager.NavigateTo("/Videos"); // 리스트 페이지로 이동
         }
         else
         {
@@ -72,6 +72,6 @@
 
     protected void btnCancel_Click()
     {
-        navigationManger.NavigateTo("/Videos"); // 리스트 페이지로 이동
+        NavigationManager.NavigateTo("/Videos"); // 리스트 페이지로 이동
     }
 }
