@@ -12,7 +12,7 @@ namespace VideoAppCore.Models
         Task<List<Video>> GetVideosAsync();            // 출력: List<T> GetAll();
         Task<Video> GetVideoByIdAsync(int id);         // 상세: GetById(int id);
         Task<Video> UpdateVideoAsync(Video model);     // 수정: T Edit(T model);
-        Task RemoveVideoAsync(int id);           // 삭제: void Delete(int id);
+        Task RemoveVideoAsync(int id);                  // 삭제: void Delete(int id);
     }
 }
 

@@ -3,7 +3,7 @@
 namespace VideoAppCore.Models
 {
     /// <summary>
-    /// [2] 모델 클래스: Video 모델 클래스 == Videos 테이블과 일대일로 매핑
+    /// [1] 모델 클래스: Video 모델 클래스 == Videos 테이블과 일대일로 매핑
     /// Video, VideoModel, VideoViewModel, VideoBase, VideoDto, VideoEntity, ..
     /// </summary>
     public class Video : AuditableBase

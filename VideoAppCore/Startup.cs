@@ -41,7 +41,7 @@ namespace VideoAppCore
                     Configuration.GetConnectionString("DefaultConnection")));
 
             // DI Container에 서비스 등록
-            services.AddTransient<IVideoRepositoryAsync, VideoRepositoryEfCoreAsync>();
+            services.AddTransient<IVideoRepositoryAsync, VideoRepositoryEfCoreAsync>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
